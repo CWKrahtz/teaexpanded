@@ -41,14 +41,42 @@ fun ConversationScreen( modifier: Modifier = Modifier) {
             id = "1",
             participant = "Conversation 1",
             participantImg = "url...",
-            date =  "Yesterday",
+            date =  "17:48",
             message = "Last message send! Good luck!"
         ),
         Chats(
             id = "2",
             participant = "Conversation 2",
             participantImg = "url...",
+            date =  "Yesterday",
+            message = "I do hope this works. If not it is okay will sort it out."
+        ),
+        Chats(
+            id = "3",
+            participant = "Conversation 3",
+            participantImg = "url...",
+            date =  "Tuesday",
+            message = "I do hope this works. If not it is okay will sort it out."
+        ),
+        Chats(
+            id = "4",
+            participant = "Conversation 4",
+            participantImg = "url...",
             date =  "Monday",
+            message = "I do hope this works. If not it is okay will sort it out."
+        ),
+        Chats(
+            id = "5",
+            participant = "Conversation 5",
+            participantImg = "url...",
+            date =  "Sunday",
+            message = "I do hope this works. If not it is okay will sort it out."
+        ),
+        Chats(
+            id = "6",
+            participant = "Conversation 6",
+            participantImg = "url...",
+            date =  "Saturday",
             message = "I do hope this works. If not it is okay will sort it out."
         )
     )
@@ -82,10 +110,9 @@ fun ConversationScreen( modifier: Modifier = Modifier) {
             modifier = Modifier
                 .height(48.dp)
                 .fillMaxWidth()
-                .background(Black)
         )
         LazyColumn (
-            modifier = Modifier.padding(20.dp)
+//            modifier = Modifier.padding(20.dp)
         ){
             items(dummyData) { chats -> // Assuming you have a list to iterate over
                 ConversationView(chats, modifier)
