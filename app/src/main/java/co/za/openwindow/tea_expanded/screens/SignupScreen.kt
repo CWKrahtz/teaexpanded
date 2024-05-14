@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +43,10 @@ import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import co.za.openwindow.tea_expanded.ui.theme.White
 
 @Composable
-fun SignupScreen(name: String, modifier: Modifier = Modifier) {
+fun SignupScreen(
+    navigateBackToLogin: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     Column (
         Modifier
             .background(White)
@@ -78,11 +83,17 @@ fun SignupScreen(name: String, modifier: Modifier = Modifier) {
             Text(
                 text = "Create a new user account or "
             )
-            Text(
-                text = "Login here",
-                textDecoration = TextDecoration.Underline,
-                color = DarkBlue
-            )
+            TextButton(
+                onClick = { navigateBackToLogin.invoke() },
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                Text(
+                    text = "Login here",
+                    textDecoration = TextDecoration.Underline,
+                    color = DarkBlue
+                )
+            }
+
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -140,6 +151,6 @@ fun SignupScreen(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun SignupScreenPreview() {
     TeaexpandedTheme {
-        SignupScreen("Android")
+        SignupScreen()
     }
 }

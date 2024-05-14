@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +43,10 @@ import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import co.za.openwindow.tea_expanded.ui.theme.White
 
 @Composable
-fun LoginScreen(name: String, modifier: Modifier = Modifier) {
+fun LoginScreen(
+    navigateToSignup:() -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     Column (
         Modifier
             .background(White)
@@ -56,7 +61,8 @@ fun LoginScreen(name: String, modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.tea),
             contentDescription = "Logo",
             alignment = Alignment.Center,
-            modifier = Modifier.width(75.dp)
+            modifier = Modifier
+                .width(75.dp)
                 .shadow(
                     elevation = 15.dp,
                     shape = RoundedCornerShape(CornerSize(50.dp)),
@@ -73,15 +79,22 @@ fun LoginScreen(name: String, modifier: Modifier = Modifier) {
 
         Row (
             Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "Login to your account or "
+                text = "Login to your account or ",
             )
-            Text(
-                text = "create new account",
-                textDecoration = TextDecoration.Underline,
-                color = DarkBlue
-            )
+            TextButton(
+                onClick = { navigateToSignup.invoke() },
+                contentPadding = PaddingValues(0.dp)
+                ) {
+                Text(
+                    text = "create new account",
+                    textDecoration = TextDecoration.Underline,
+                    color = DarkBlue
+                )
+            }
+
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -130,6 +143,6 @@ fun LoginScreen(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun LoginScreenPreview() {
     TeaexpandedTheme {
-        LoginScreen("Android")
+        LoginScreen()
     }
 }
