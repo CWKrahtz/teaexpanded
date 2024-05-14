@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -67,4 +68,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    val navVersion = "2.7.7"
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
 }

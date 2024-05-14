@@ -1,4 +1,4 @@
-package co.za.openwindow.tea_expanded.Screens
+package co.za.openwindow.tea_expanded.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
