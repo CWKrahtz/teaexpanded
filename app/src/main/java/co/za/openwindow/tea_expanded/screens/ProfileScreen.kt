@@ -39,7 +39,10 @@ import co.za.openwindow.tea_expanded.R
 import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
+fun ProfileScreen(
+    logUserOff: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -103,11 +106,26 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
 
         ) {
             Button(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = { /*TODO*/ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF179CDE))
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF179CDE)
+                )
             ) {
                 Text(
                     text = "Update Changes",
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(vertical = 2.dp)
+                )
+            }
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { logUserOff.invoke() },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8C8C8C)
+                )
+            ) {
+                Text(
+                    text = "Sign Out",
                     fontSize = 18.sp,
                     modifier = Modifier.padding(vertical = 2.dp)
                 )

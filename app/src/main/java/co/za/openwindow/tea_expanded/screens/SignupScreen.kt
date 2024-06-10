@@ -42,6 +42,10 @@ import co.za.openwindow.tea_expanded.ui.theme.DarkBlue
 import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import co.za.openwindow.tea_expanded.ui.theme.White
 
+
+//TODO: SignupViewModel, authRepository for signup functionality and creating new user.
+
+
 @Composable
 fun SignupScreen(
     navigateBackToLogin: () -> Unit = {},

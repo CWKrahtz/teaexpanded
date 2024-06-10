@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,7 +59,8 @@ import com.google.firebase.auth.auth
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     navigateToSignup:() -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit = {}
 ) {
 
     //TEST - firebase do not keep in code
@@ -132,7 +134,7 @@ fun LoginScreen(
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = loginState.email,
-            onValueChange = { /*TODO: Handle on state change*/ },
+            onValueChange = { viewModel.handleInputStateChanges("email", it) },
             label = { Text("Email") },
         )
 
@@ -141,13 +143,22 @@ fun LoginScreen(
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = loginState.password,
-            onValueChange = { /*TODO: Handle on state change*/ },
+            onValueChange = { viewModel.handleInputStateChanges("password", it) },
             label = { Text(text  = "Password")},
             visualTransformation = PasswordVisualTransformation(),
             trailingIcon = { Icon(painter = painterResource(id = R.drawable.eye), contentDescription = "Eye") },
             )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        if (loginState.error.isNotBlank()){
+            Text(
+                text = loginState.error,
+                color = Color.Red,
+                textAlign = TextAlign.Center
+            )
+        }
+
         Column (
             Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -164,6 +175,10 @@ fun LoginScreen(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
+        }
+
+        if(loginState.success) {
+            navigateToHome.invoke()
         }
 
     }
