@@ -62,10 +62,15 @@ fun Navigation(
             SignupScreen(
                 navigateBackToLogin = {
                     navController.popBackStack()
+                },
+                navigateToHome = {
+                    navController.navigate(HomeRoutes.conversationScreen){
+                        launchSingleTop = true
+                        popUpTo(route = AuthRoutes.loginScreen){
+                            inclusive = true
+                        }
+                    }
                 }
-//                navigateToLogin = {
-//                    navController.navigate(AuthRoutes.signupScreen)
-//                }
             )
         }
         //HomeScreens

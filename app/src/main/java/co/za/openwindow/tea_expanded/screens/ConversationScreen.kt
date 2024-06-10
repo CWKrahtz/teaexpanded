@@ -32,61 +32,67 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import co.za.openwindow.tea_expanded.models.Chats
 import co.za.openwindow.tea_expanded.ui.theme.Black
 import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
+import co.za.openwindow.tea_expanded.viewmodels.ConversationsViewModel
 import co.za.openwindow.tea_expanded.views.ConversationView
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ConversationScreen(
+    viewModel: ConversationsViewModel = viewModel(),
     modifier: Modifier = Modifier,
     navigateToprofile: () -> Unit = {},
 ) {
 
-    val dummyData: List<Chats> = listOf(
-        Chats(
-            id = "1",
-            participant = "Conversation 1",
-            participantImg = "url...",
-            date =  "17:48",
-            message = "Last message send! Good luck!"
-        ),
-        Chats(
-            id = "2",
-            participant = "Conversation 2",
-            participantImg = "url...",
-            date =  "Yesterday",
-            message = "I do hope this works. If not it is okay will sort it out."
-        ),
-        Chats(
-            id = "3",
-            participant = "Conversation 3",
-            participantImg = "url...",
-            date =  "Tuesday",
-            message = "I do hope this works. If not it is okay will sort it out."
-        ),
-        Chats(
-            id = "4",
-            participant = "Conversation 4",
-            participantImg = "url...",
-            date =  "Monday",
-            message = "I do hope this works. If not it is okay will sort it out."
-        ),
-        Chats(
-            id = "5",
-            participant = "Conversation 5",
-            participantImg = "url...",
-            date =  "Sunday",
-            message = "I do hope this works. If not it is okay will sort it out."
-        ),
-        Chats(
-            id = "6",
-            participant = "Conversation 6",
-            participantImg = "url...",
-            date =  "Saturday",
-            message = "I do hope this works. If not it is okay will sort it out."
-        )
-    )
+//    val dummyData: List<Chats> = listOf(
+//        Chats(
+//            id = "1",
+//            participant = "Conversation 1",
+//            participantImg = "url...",
+//            date =  "17:48",
+//            message = "Last message send! Good luck!"
+//        ),
+//        Chats(
+//            id = "2",
+//            participant = "Conversation 2",
+//            participantImg = "url...",
+//            date =  "Yesterday",
+//            message = "I do hope this works. If not it is okay will sort it out."
+//        ),
+//        Chats(
+//            id = "3",
+//            participant = "Conversation 3",
+//            participantImg = "url...",
+//            date =  "Tuesday",
+//            message = "I do hope this works. If not it is okay will sort it out."
+//        ),
+//        Chats(
+//            id = "4",
+//            participant = "Conversation 4",
+//            participantImg = "url...",
+//            date =  "Monday",
+//            message = "I do hope this works. If not it is okay will sort it out."
+//        ),
+//        Chats(
+//            id = "5",
+//            participant = "Conversation 5",
+//            participantImg = "url...",
+//            date =  "Sunday",
+//            message = "I do hope this works. If not it is okay will sort it out."
+//        ),
+//        Chats(
+//            id = "6",
+//            participant = "Conversation 6",
+//            participantImg = "url...",
+//            date =  "Saturday",
+//            message = "I do hope this works. If not it is okay will sort it out."
+//        )
+//    )
+
+    val conversations = viewModel.conversationList
 
     Column (
         Modifier
@@ -131,7 +137,7 @@ fun ConversationScreen(
             LazyColumn (
 //            modifier = Modifier.padding(20.dp)
             ){
-                items(dummyData) { chats -> // Assuming you have a list to iterate over
+                items(conversations) { chats -> // Assuming you have a list to iterate over
                     ConversationView(chats, modifier)
                 }
             }

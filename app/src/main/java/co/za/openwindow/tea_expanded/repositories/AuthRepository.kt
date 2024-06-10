@@ -1,9 +1,11 @@
 package co.za.openwindow.tea_expanded.repositories
 
 import android.util.Log
+import co.za.openwindow.tea_expanded.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -26,6 +28,7 @@ class AuthRepository {
 
     //TODO: register a new user
     suspend fun createNewAccount(
+        username: String,
         email: String,
         password: String,
         isCompleted:(Boolean) -> Unit //Call back function - send back true or false if it is successful or not
@@ -36,7 +39,30 @@ class AuthRepository {
             .createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(){
                 if(it.isSuccessful){
-                    Log.d("AAA Register State: ", "success")
+                    Log.d("AAA Register State: ", username)
+
+                    //TODO: Create user in my DB
+
+                    //Reference var to our users collections
+                    var userDB = Firebase.firestore.collection("users")
+
+                    //starts creating document in our collection
+                    it.result.user?.uid?.let { it1 ->
+                        userDB.document(it1).set(
+                            User(
+                                id = it1,
+                                email = email,
+                                username = username
+                            )
+                        ).addOnSuccessListener {
+                            Log.d("AAA Create User State", "YAY!")
+                            isCompleted.invoke(true)
+                        }.addOnFailureListener { e ->
+                            Log.d("AAA Register State: ", e.localizedMessage.toString())
+                            isCompleted.invoke(false)
+                        }
+                    }
+
                     isCompleted.invoke(true)
                 } else {
                     Log.d("AAA Register State: ", it.exception?.localizedMessage.toString())

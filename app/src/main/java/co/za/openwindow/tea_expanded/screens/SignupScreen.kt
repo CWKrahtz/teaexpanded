@@ -22,6 +22,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,14 +34,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import co.za.openwindow.tea_expanded.R
 import co.za.openwindow.tea_expanded.ui.theme.DarkBlue
 import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import co.za.openwindow.tea_expanded.ui.theme.White
+import co.za.openwindow.tea_expanded.viewmodels.LoginViewModel
+import co.za.openwindow.tea_expanded.viewmodels.SignupViewModel
 
 
 //TODO: SignupViewModel, authRepository for signup functionality and creating new user.
@@ -48,9 +53,14 @@ import co.za.openwindow.tea_expanded.ui.theme.White
 
 @Composable
 fun SignupScreen(
+    viewModel: SignupViewModel = viewModel(),
     navigateBackToLogin: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit = {}
 ) {
+
+    val signupState by viewModel.authState.collectAsState()
+
     Column (
         Modifier
             .background(White)
@@ -102,42 +112,51 @@ fun SignupScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-        var username by remember { mutableStateOf("Username") }
+//        var username by remember { mutableStateOf("Username") }
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = username,
-            onValueChange = { username = it },
+            value = signupState.username,
+            onValueChange = { viewModel.handleInputStateChanges("username", it) },
             label = { Text("Username") },
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        var email by remember { mutableStateOf("Email") }
+//        var email by remember { mutableStateOf("Email") }
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = email,
-            onValueChange = { email = it },
+            value = signupState.email,
+            onValueChange = { viewModel.handleInputStateChanges("email", it) },
             label = { Text("Email") },
         )
 
         Spacer(modifier = Modifier.height(24.dp))
-        var password by remember { mutableStateOf("Password") }
+//        var password by remember { mutableStateOf("Password") }
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = password,
-            onValueChange = { password = it },
+            value = signupState.password,
+            onValueChange = { viewModel.handleInputStateChanges("password", it) },
             label = { Text(text  = "Password") },
             visualTransformation = PasswordVisualTransformation(),
             trailingIcon = { Icon(painter = painterResource(id = R.drawable.eye), contentDescription = "Eye") },
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        if (signupState.error.isNotBlank()){
+            Text(
+                text = signupState.error,
+                color = Color.Red,
+                textAlign = TextAlign.Center
+            )
+        }
+
         Column (
             Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
 
         ){
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { viewModel.signup() },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF179CDE))
             ) {
@@ -147,6 +166,10 @@ fun SignupScreen(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
+        }
+
+        if(signupState.success) {
+            navigateToHome.invoke()
         }
 
     }

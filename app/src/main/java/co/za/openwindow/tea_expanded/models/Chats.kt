@@ -1,6 +1,5 @@
 package co.za.openwindow.tea_expanded.models
 //MODEL - Declare how the model should behave
-//The information we need for each conversation
 data class Chats (
     val id: String, //Firebase saves ids as image
     val participant: String,//Conversation with
