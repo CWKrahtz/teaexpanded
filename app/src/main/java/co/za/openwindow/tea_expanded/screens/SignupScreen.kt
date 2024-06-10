@@ -79,6 +79,7 @@ fun SignupScreen(
 
         Row (
             Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ){
             Text(
                 text = "Create a new user account or "
