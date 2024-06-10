@@ -70,14 +70,17 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    //Nav
     val navVersion = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+    //Firebase
+    // Import the Firebase BoM
+    implementation(platform(libs.firebase.bom))
 
     // TODO: Add the dependencies for any other Firebase products you want to use
     // See https://firebase.google.com/docs/android/setup#available-libraries
     // For example, add the dependencies for Firebase Authentication and Cloud Firestore
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 }

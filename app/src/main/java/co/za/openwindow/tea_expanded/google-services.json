@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "776260777489",
+    "project_id": "tea-android-expanded",
+    "storage_bucket": "tea-android-expanded.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776260777489:android:84afc3f20f37133375e3b0",
+        "android_client_info": {
+          "package_name": "co.za.openwindow.tea_expanded"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuRkM12ndMEkCCczMeZiYXqn4XQvRDzDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

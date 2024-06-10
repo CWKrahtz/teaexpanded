@@ -29,6 +29,7 @@ fun Navigation(
 ){
 
 //    TODO: Add functionality to check which route to start with
+    //TODO: Check the current user to determine LOGIN/HOME
 
 //    Router - Define all our composable nav routes
     NavHost(navController = navController, startDestination = AuthRoutes.loginScreen){
