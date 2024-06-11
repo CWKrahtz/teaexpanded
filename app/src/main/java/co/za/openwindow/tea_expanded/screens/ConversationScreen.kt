@@ -1,6 +1,7 @@
 package co.za.openwindow.tea_expanded.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,12 +40,14 @@ import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import co.za.openwindow.tea_expanded.viewmodels.ConversationsViewModel
 import co.za.openwindow.tea_expanded.views.ConversationView
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.za.openwindow.tea_expanded.models.Message
 
 @Composable
 fun ConversationScreen(
     viewModel: ConversationsViewModel = viewModel(),
     modifier: Modifier = Modifier,
     navigateToprofile: () -> Unit = {},
+    navigateToMessage: (messageId: String) -> Unit = {}
 ) {
 
 //    val dummyData: List<Chats> = listOf(
@@ -138,7 +141,10 @@ fun ConversationScreen(
 //            modifier = Modifier.padding(20.dp)
             ){
                 items(conversations) { chats -> // Assuming you have a list to iterate over
-                    ConversationView(chats, modifier)
+                    ConversationView(
+                        chats = chats, //chats <- old version
+                        modifier = modifier.clickable { navigateToMessage.invoke(chats.id) }
+                    )
                 }
             }
         }
