@@ -24,6 +24,8 @@ class MessageViewModel(
     private var _messageList = mutableStateListOf<Message>()
     val messageList: List<Message> = _messageList
 
+    val cu = authRepository.currentUser
+
     //define our listener for realtime data
     var messageListener: ListenerRegistration? = null
 
