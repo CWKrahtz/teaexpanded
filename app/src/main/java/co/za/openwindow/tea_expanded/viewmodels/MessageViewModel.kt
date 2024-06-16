@@ -10,6 +10,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 
@@ -45,6 +46,7 @@ class MessageViewModel(
             .collection("chats")
             .document(id)
             .collection("messages")
+            .orderBy("time", Query.Direction.ASCENDING)  // Assuming 'time' is your timestamp field
 
         //snapshot = refers to the data that gets returns -> listening to the snapshot changes
         messageListener = messageRef.addSnapshotListener { snapshot, error ->
@@ -77,29 +79,48 @@ class MessageViewModel(
 
     }
 
-    fun addNewMessage(message: String, chatsId: String){
-        val messageRef = Firebase.firestore
-            .collection("chats")
-            .document(chatsId)
-            .collection("messages")
-
-        //get the user's information
+    fun addNewMessage(message: String, chatsId: String) {
         val user = authRepository.currentUser
+        val userId = user?.uid
+        val userEmail = user?.email.toString()
 
-        val newMessage = Message(
-            text = message,
-            from = user?.email.toString(), //TODO: get user data from firestore with current user's id
-            fromUserId = user?.uid.toString(),
-            time = Timestamp.now()
-        )
+        if (userId != null) {
+            // Fetch the username from Firestore
+            val userRef = Firebase.firestore.collection("users").document(userId)
+            userRef.get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val username = document.data?.get("username") as String? ?: userEmail  // Use email if username is not available
 
-        messageRef.add(newMessage)
-            .addOnSuccessListener {
-                Log.d("AAA new message success", it.id)
+                    // Create the new message with the username
+                    val newMessage = Message(
+                        text = message,
+                        from = userEmail,
+                        fromUserId = userId,
+                        username = username,  // Add the fetched username here
+                        time = Timestamp.now()
+                    )
+
+                    // Reference to the messages collection in Firestore
+                    val messageRef = Firebase.firestore
+                        .collection("chats")
+                        .document(chatsId)
+                        .collection("messages")
+
+                    // Add the new message to Firestore
+                    messageRef.add(newMessage)
+                        .addOnSuccessListener {
+                            Log.d("AAA new message success", it.id)
+                        }
+                        .addOnFailureListener {
+                            Log.d("AAA new message error", it.localizedMessage.toString())
+                        }
+                } else {
+                    Log.d("AAA Firestore", "No such user found")
+                }
+            }.addOnFailureListener { e ->
+                Log.d("AAA Firestore Error", "Error getting user data: ${e.localizedMessage}")
             }
-            .addOnFailureListener {
-                Log.d("AAA new message error", it.localizedMessage.toString())
-            }
+        }
     }
 
 //    fun stopListening(){

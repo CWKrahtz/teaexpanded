@@ -53,11 +53,6 @@ fun MessageScreen(
 
     var message by remember { mutableStateOf("") }
 
-//    val dummyData = listOf<Message>(// -> reminder == messages
-//        Message(from = "Armand", text = "The very last reminder", fromUserId = "Armand"),
-//        Message(from = "My Friend", text = "I love Dev!", fromUserId = "MyFriend"),
-//    )
-
     val messageData = viewModel.messageList
 
     Column(
@@ -135,7 +130,7 @@ fun MessageBubble(
             )
     ) {
         Text(
-            text = message.from,
+            text = message.username,  // Change this line to use username
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = modifier.padding(start = 10.dp, top = 10.dp)
