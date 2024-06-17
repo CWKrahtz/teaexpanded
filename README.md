@@ -4,7 +4,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/CWKrahtz/teaexpanded">
-    <img src="assets/icon.png" alt="Logo" width="80" height="80">
+    <img src="images/ic_launcher_foreground.xml" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Tea</h3>
