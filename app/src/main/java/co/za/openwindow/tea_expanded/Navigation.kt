@@ -1,6 +1,12 @@
 package co.za.openwindow.tea_expanded
 
+import android.Manifest
+import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -120,4 +126,21 @@ fun Navigation(
             )
         }
     }
+
+    //Setup the request to send notifications
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) {
+        Log.d("AAA Notification request", it.toString())
+    }
+
+    LaunchedEffect(key1 = permissionLauncher) {
+        //Launching our request, if not asked yet
+        Log.d("AAA Launching notification request...", "pending...")
+        //Check if sdk version is higher than 33
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
 }

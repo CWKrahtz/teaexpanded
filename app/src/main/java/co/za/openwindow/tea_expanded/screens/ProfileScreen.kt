@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.za.openwindow.tea_expanded.R
 import co.za.openwindow.tea_expanded.repositories.AuthRepository
+import co.za.openwindow.tea_expanded.services.MyNotification
 import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import coil.compose.AsyncImage
 import com.google.firebase.Firebase
@@ -60,6 +62,8 @@ fun ProfileScreen(
     logUserOff: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+
+    val context = LocalContext.current
 
     val auth = FirebaseAuth.getInstance()
     val firestore = FirebaseFirestore.getInstance()
@@ -233,7 +237,12 @@ fun ProfileScreen(
                 onClick = {
                     coroutineScope.launch {
                         saveData()
-                    }
+                    };
+                    var notification = MyNotification(context)
+                    notification.showNotification(
+                        "Profile Information",
+                        "User Information Updated."
+                    )
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8C8C8C)
                 )

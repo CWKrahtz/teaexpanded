@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import co.za.openwindow.tea_expanded.R
+import co.za.openwindow.tea_expanded.services.MyNotification
 import co.za.openwindow.tea_expanded.ui.theme.DarkBlue
 import co.za.openwindow.tea_expanded.ui.theme.TeaexpandedTheme
 import co.za.openwindow.tea_expanded.ui.theme.White
@@ -63,21 +65,8 @@ fun LoginScreen(
     navigateToHome: () -> Unit = {}
 ) {
 
-    //TEST - firebase do not keep in code
-    // Initialize Firebase Auth
-//    auth = Firebase.auth
-//
-//    // Check if user is signed in (non-null) and update UI accordingly.
-//    val currentUser = auth.currentUser
-//    if (currentUser != null) {
-//        Log.d("AAA Current User", currentUser.email.toString())
-//    }else {
-//        Log.d("AAA Current User", "NONE")
-//    }
-//    var email by remember { mutableStateOf("") }
-//    var password by remember { mutableStateOf("") }
-
     val loginState by viewModel.authState.collectAsState()//link our viewModel to our view
+    val context = LocalContext.current
 
     Column (
         Modifier
@@ -165,7 +154,15 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Bottom
 
         ){
-            Button(onClick = { viewModel.login() }, //login function in viewModel
+            Button(
+                onClick = {
+                    viewModel.login();
+                    var notification = MyNotification(context)
+                    notification.showNotification(
+                        "Login",
+                        "Hooray! User logged in."
+                    )
+                }, //login function in viewModel
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF179CDE))
             ) {
