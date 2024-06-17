@@ -2,11 +2,10 @@
 
 <!-- PROJECT LOGO -->
 <br />
+ 
 <p align="center">
-  <a href="https://github.com/CWKrahtz/teaexpanded">
-    <img src="images/ic_launcher_foreground.xml" alt="Logo" width="80" height="80">
-  </a>
 
+  <img src="images/tea.png" />
   <h3 align="center">Tea</h3>
 
   <p align="center">
@@ -133,6 +132,7 @@ Project Link: [https://github.com/CWKrahtz/source-code](https://https://github.c
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[logo]: images/tea.png
 [screenshot1]: images/image1.png
 [screenshot2]: images/image2.png
 [screenshot3]: images/image3.png
